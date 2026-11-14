@@ -16,7 +16,10 @@ The report submitted on Canvas is `HW2\_report.pdf` in this repo (added when fin
 
 \## Task 1 - tokenizer study
 
-To be added.
+- `configs/tokenizers_laptop.yaml`: the course sweep `laptop_tokenizers.yaml` with 6 tokenizers (char, BPE-512, BPE-2048, unigram-2048, word-2048, word-8192; byte and GPT-2 BPE left out), 600 steps (30 warmup), 8192 tokens per step (4.9M tokens), seed 1337, no time cap. Results: `results/task1/`, `results/task1_tokenizers.csv`, `figures/task1_tokenizers.png` (from `scripts/task1_tokenizers.py`).
+- Final validation bpb, equal to the best checkpoint (step 600) for all six: unigram-2048 2.0872, BPE-2048 2.0901, BPE-512 2.1060, word-2048 2.1534, word-8192 2.1699, char 2.2681. Passes over the training text are in the CSV. No tokenizer overfits at this budget.
+- Overfitting run: `configs/tokenizer_overfit_laptop.yaml`, word-8192 for the full 2000 steps. Best validation bpb 2.1001 at step 800, final 2.3001 (+0.200), while training bpb keeps falling. Results: `results/task1_long/`, `results/task1_long.csv`, `figures/task1_long.png` (from `scripts/task1_long.py`).
+- Fix test: to be added.
 
 
 

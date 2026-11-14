@@ -1,0 +1,31 @@
+# Task 2 (laptop): the recipe ladder on FineWeb at L4q size (4 layers x 256).
+# Base is 03_gpt_fineweb.yaml (AdamW + cosine), as in the course sweep, so only the stated change differs per row.
+# Fixed steps, no time cap: every run sees exactly the same tokens (300 x 16,384 = 4.9M).
+name: recipe_laptop
+base: ../03_gpt_fineweb.yaml
+seeds: [1337, 42]
+common:
+  model.dim: 256
+  model.n_layers: 4
+  model.n_heads: 4
+  train.batch_size: 16
+  train.grad_accum: 2
+  train.compile: false
+  train.max_steps: 300
+  train.warmup_steps: 20
+  train.log_every: 10
+  train.eval_every: 50
+  train.eval_tokens: 131072
+  eval.final_eval_tokens: 1048576
+  eval.batch_size: 8
+runs:
+  - name: gpt2_textbook
+    overrides: {model.norm: layernorm, model.pos: learned, model.mlp: gelu, model.bias: true}
+  - name: plus_rmsnorm_rope
+    overrides: {model.norm: rmsnorm, model.pos: rope, model.mlp: gelu}
+  - name: plus_swiglu
+  - name: plus_wsd_adamw      # control: separates the schedule from the optimizer
+    overrides: {train.schedule: wsd, train.warmdown_frac: 0.3, train.min_lr_frac: 0.0}
+  - name: plus_muon
+    overrides: {train.optimizer: muon, train.matrix_lr: 0.02, train.lr: 3e-3, train.embed_lr: 3e-3,
+                train.schedule: wsd, train.warmdown_frac: 0.3, train.min_lr_frac: 0.0}
