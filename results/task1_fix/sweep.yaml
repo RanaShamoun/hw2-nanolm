@@ -1,0 +1,13 @@
+# Task 1 fix test: word-8192 at the long budget with more dropout (0.1 -> 0.3); everything else identical to the overfitting run.
+name: tokenizer_fix_laptop
+base: ../laptop/L3_tokenizer.yaml
+seeds: [1337]
+common:
+  train.max_steps: 2000
+  train.warmup_steps: 100
+  train.max_time_sec: 1000000
+  train.log_every: 20
+  train.eval_every: 100
+runs:
+  - name: word_8192_dropout03
+    overrides: {data.tokenizer: "word:8192", model.dropout: 0.3}

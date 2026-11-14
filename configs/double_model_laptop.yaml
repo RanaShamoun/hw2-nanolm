@@ -1,0 +1,18 @@
+# 2x model at equal tokens: 256 x 8 (2.0x the non-embedding parameters of 256 x 4), 300 steps, recipe = plus_swiglu.
+name: double_model_laptop
+base: ../03_gpt_fineweb.yaml
+seeds: [1337]
+common:
+  train.batch_size: 16
+  train.grad_accum: 2
+  train.compile: false
+  train.max_steps: 300
+  train.warmup_steps: 20
+  train.log_every: 10
+  train.eval_every: 50
+  train.eval_tokens: 131072
+  eval.final_eval_tokens: 1048576
+  eval.batch_size: 8
+runs:
+  - name: size_d256_L8
+    overrides: {model.dim: 256, model.n_layers: 8, model.n_heads: 4}

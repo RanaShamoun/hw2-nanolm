@@ -1,0 +1,22 @@
+name: swiglu_lr_laptop
+base: ../03_gpt_fineweb.yaml
+seeds: [1337, 42]
+common:
+  model.dim: 256
+  model.n_layers: 4
+  model.n_heads: 4
+  train.batch_size: 16
+  train.grad_accum: 2
+  train.compile: false
+  train.max_steps: 300
+  train.warmup_steps: 20
+  train.log_every: 10
+  train.eval_every: 50
+  train.eval_tokens: 131072
+  eval.final_eval_tokens: 1048576
+  eval.batch_size: 8
+  train.lr: 5e-4
+runs:
+  - name: gelu_lr5e-4
+    overrides: {model.mlp: gelu}
+  - name: swiglu_lr5e-4
