@@ -1,0 +1,14 @@
+# Task 1 (laptop): does a large-vocabulary tokenizer overfit at the course budget?
+# word-8192 for the full 2000 steps (16.4M tokens), evaluated every 100 steps; the 600-step sweep showed no overfitting.
+name: tokenizer_overfit_laptop
+base: ../laptop/L3_tokenizer.yaml
+seeds: [1337]
+common:
+  train.max_steps: 2000
+  train.warmup_steps: 100
+  train.max_time_sec: 1000000
+  train.log_every: 20
+  train.eval_every: 100
+runs:
+  - name: word_8192_long
+    overrides: {data.tokenizer: "word:8192"}

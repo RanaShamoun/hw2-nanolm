@@ -1,0 +1,13 @@
+row,seed_42,seed_1337,mean,std
+gpt2_textbook,2.6408996892637187,2.652828853185433,2.6469,0.0084
+plus_rmsnorm_rope,2.4591417748779185,2.4491146555099723,2.4541,0.0071
+plus_swiglu,2.3800366462558062,2.3979418764453695,2.389,0.0127
+plus_wsd_adamw,2.2741979751710035,2.291871405926914,2.283,0.0125
+plus_muon,2.1330764491121044,2.142541772160462,2.1378,0.0067
+
+A,B,diff_per_seed...,mean,agreement
+gpt2_textbook,plus_rmsnorm_rope,-0.1818,-0.2037,-0.1927,same sign in every seed
+plus_rmsnorm_rope,plus_swiglu,-0.0791,-0.0512,-0.0651,same sign in every seed
+plus_swiglu,plus_wsd_adamw,-0.1058,-0.1061,-0.106,same sign in every seed
+plus_wsd_adamw,plus_muon,-0.1411,-0.1493,-0.1452,same sign in every seed
+gpt2_textbook,plus_muon,-0.5078,-0.5103,-0.5091,same sign in every seed

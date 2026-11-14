@@ -1,0 +1,20 @@
+{
+ "name": "word_8192_long",
+ "seed": 1337,
+ "date": "2026-11-09T20:56:59",
+ "git": {
+  "commit": "bed852ddbcabab7febef0b596e7fbd78cf5b197d",
+  "branch": "main",
+  "dirty": true
+ },
+ "host": "Rana",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "python": "3.13.7",
+ "torch": "2.14.1+cpu",
+ "device": "cpu (precision=fp32, compile=no)",
+ "world_size": 1,
+ "command": "C:\\Users\\shamo\\OneDrive\\Documents\\Rana\\Classes\\CMPE258-DeepLearning\\LLM_HW1\\part1\\DeepDataMiningLearning\\DeepDataMiningLearning\\llm\\nanolm\\train.py --config C:\\Users\\shamo\\OneDrive\\Documents\\Rana\\Classes\\CMPE258-DeepLearning\\LLM_HW1\\part1\\DeepDataMiningLearning\\DeepDataMiningLearning\\llm\\nanolm\\configs\\laptop\\L3_tokenizer.yaml train.max_steps=2000 train.warmup_steps=100 train.max_time_sec=1000000 train.log_every=20 train.eval_every=100 data.tokenizer=\"word:8192\" name=word_8192_long seed=1337 run_dir=C:\\Users\\shamo\\OneDrive\\Documents\\Rana\\Classes\\CMPE258-DeepLearning\\LLM_HW1\\part1\\DeepDataMiningLearning\\DeepDataMiningLearning\\llm\\outputs\\nanolm\\sweeps\\tokenizer_overfit_laptop\\word_8192_long_s1337 tags=[\"tokenizer_overfit_laptop\"]",
+ "tags": [
+  "tokenizer_overfit_laptop"
+ ]
+}

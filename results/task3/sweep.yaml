@@ -1,0 +1,25 @@
+# Task 3 (laptop): model-size sweep on FineWeb at a fixed token budget (300 steps x 16,384 = 4.9M tokens).
+# Recipe = plus_swiglu (AdamW + cosine, RMSNorm/RoPE/SwiGLU). The 256x4 point is reused from the recipe sweep.
+name: scaling_laptop
+base: ../03_gpt_fineweb.yaml
+seeds: [1337]
+common:
+  train.batch_size: 16
+  train.grad_accum: 2
+  train.compile: false
+  train.max_steps: 300
+  train.warmup_steps: 20
+  train.log_every: 10
+  train.eval_every: 50
+  train.eval_tokens: 131072
+  eval.final_eval_tokens: 1048576
+  eval.batch_size: 8
+runs:
+  - name: size_d64_L2
+    overrides: {model.dim: 64, model.n_layers: 2, model.n_heads: 1}
+  - name: size_d128_L2
+    overrides: {model.dim: 128, model.n_layers: 2, model.n_heads: 2}
+  - name: size_d192_L3
+    overrides: {model.dim: 192, model.n_layers: 3, model.n_heads: 3}
+  - name: size_d384_L6
+    overrides: {model.dim: 384, model.n_layers: 6, model.n_heads: 6}

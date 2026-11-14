@@ -1,0 +1,24 @@
+# Task 1 (laptop): the same Transformer with different tokenizers, equal token budget (600 steps x 8192 = 4.9M tokens).
+# Fixed steps, time cap off. Evaluation every 50 steps so the best and the final validation bpb can both be read.
+name: tokenizers_laptop
+base: ../laptop/L3_tokenizer.yaml
+seeds: [1337]
+common:
+  train.max_steps: 600
+  train.warmup_steps: 30
+  train.max_time_sec: 1000000
+  train.log_every: 10
+  train.eval_every: 50
+runs:
+  - name: char
+    overrides: {data.tokenizer: char}
+  - name: sp_bpe_512
+    overrides: {data.tokenizer: "sp_train:bpe:512"}
+  - name: sp_bpe_2048
+    overrides: {data.tokenizer: "sp_train:bpe:2048"}
+  - name: sp_unigram_2048
+    overrides: {data.tokenizer: "sp_train:unigram:2048"}
+  - name: word_2048
+    overrides: {data.tokenizer: "word:2048"}
+  - name: word_8192
+    overrides: {data.tokenizer: "word:8192"}
