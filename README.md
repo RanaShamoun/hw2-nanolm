@@ -10,7 +10,7 @@ Machine: HP laptop (CPU), Python 3.13, PyTorch 2.14.
 
 
 
-The report submitted on Canvas is `HW2\_report.pdf` in this repo (added when finished).
+The final report submitted on Canvas is `HW2_report.pdf`.
 
 
 
@@ -22,8 +22,23 @@ The report submitted on Canvas is `HW2\_report.pdf` in this repo (added when fin
 
 \- Overfitting run: `configs/tokenizer_overfit_laptop.yaml`, word-8192 for the full 2000 steps. Best validation bpb 2.1001 at step 800, final 2.3001 (+0.200), while training bpb keeps falling. Results: `results/task1_long/`, `results/task1_long.csv`, `figures/task1_long.png` (from `scripts/task1_long.py`).
 
-\- Fix test: to be added.
+\- Fix experiment: `configs/tokenizer_fix_laptop.yaml` repeats the
+  word-8192 run with dropout increased from 0.1 to 0.3.
 
+- Results:
+  - Original run: best validation bpb 2.1001 (step 800),
+    final validation bpb 2.3001.
+  - Dropout 0.3: best validation bpb 2.0593 (step 1800),
+    final validation bpb 2.0693.
+
+- The stronger regularization removed most of the overfitting and
+  improved validation performance by 0.231 bpb relative to the
+  original final checkpoint.
+
+- Outputs:
+  `results/task1_fix.csv`,
+  `figures/task1_fix.png`.
+  
 
 
 \## Task 2 - training recipe on FineWeb (L4q size: 4 layers x 256)
@@ -50,7 +65,61 @@ The report submitted on Canvas is `HW2\_report.pdf` in this repo (added when fin
 
 \## Extra credit - SwiGLU
 
-To be added.
+### Learning-rate test
+
+`swiglu_lr_laptop.yaml`
+
+Compare GELU and SwiGLU at learning rate 5e-4
+(300 steps, 2 seeds).
+
+Results:
+
+| Condition | Mean validation bpb |
+|------------|------------|
+| GELU, lr=5e-4 | 2.6116 |
+| SwiGLU, lr=5e-4 | 2.5768 |
+
+SwiGLU remained better by 0.035 bpb.
+
+### Token-budget test
+
+`swiglu_tokens_laptop.yaml`
+
+Compare GELU and SwiGLU at 600 steps (9.8M tokens).
+
+Results:
+
+| Condition | Mean validation bpb |
+|------------|------------|
+| GELU, 600 steps | 2.2244 |
+| SwiGLU, 600 steps | 2.1320 |
+
+SwiGLU remained better by 0.092 bpb and the advantage increased relative
+to the 300-step runs.
+
+### 2× model versus 2× tokens
+
+`double_model_laptop.yaml`
+
+Reference:
+
+- 256×4, 300 steps: 2.3890 bpb
+
+2× tokens:
+
+- 256×4, 600 steps: 2.1320 bpb
+
+2× model:
+
+- 256×8, 300 steps: 2.4328 bpb
+
+At this budget, additional tokens were substantially more valuable than
+doubling model depth.
+
+Outputs:
+
+- `figures/extra_credit.png`
+- `results/extra_credit.csv`
 
 
 
